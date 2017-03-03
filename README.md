@@ -1,2 +1,3 @@
 # opws-schemata
-OPWS schema files and validators
+
+OPWS schema files and documentation
