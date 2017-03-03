@@ -80,8 +80,8 @@
       "type": "string",
       "enum": [
         "masked",
-        "shown",
-        "showable",
+        "unmasked",
+        "revealable",
         "maskable"
       ]
     },
@@ -92,7 +92,7 @@
         "input": {
           "$ref": "#/definitions/requirement"
         },
-        "characters": {
+        "masking": {
           "$ref": "#/definitions/maskedness"
         }
       }

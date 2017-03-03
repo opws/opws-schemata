@@ -77,8 +77,8 @@ definitions:
     type: string
     enum:
     - masked
-    - shown
-    - showable
+    - unmasked
+    - revealable
     - maskable
 
   formfield:
@@ -89,7 +89,7 @@ definitions:
       input:
         $ref: "#/definitions/requirement"
 
-      characters:
+      masking:
         $ref: "#/definitions/maskedness"
 
   accountfield:
