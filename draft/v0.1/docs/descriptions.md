@@ -4,7 +4,7 @@ A description object is an object representing a free prose description, in diff
 
 Locales of text are labeled with [BCP47](https://tools.ietf.org/html/bcp47)-style keys (where locales may be distinguished beyond the lower-case language code with a capitalized country code), with underscores in place of hyphens. The simplest tag is picked for each localization: more complex tags may be used when writing alternative formulations that are more dialect-specific. (For instance, if the initial Portuguese localization of a freeform field were written with Brazilian Portuguese isms, it would be under `pt`: a pull request to introduce a European Portuguese version would change it so there are `pt_BR` and `pt_PT` fields.)
 
-An English (or en_US) version of any note should be included along with the target language, as a guaranteed last-chance fallback (see [issue #12](https://github.com/opws/domainprofiles/issues/12)).
+An English (or en_US) version of any note should be included along with the target language, as a guaranteed last-chance fallback (see [issue #12](https://github.com/opws/opws-dataset/issues/12)).
 
 ## Description Lists
 
