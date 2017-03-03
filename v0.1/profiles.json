@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "https://schemata.opws.org/draft/v0.1/profiles.json#",
+  "id": "https://schemata.opws.org/v0.1/profiles.json#",
   "version": "0.1.0",
   "definitions": {
     "charclass": {

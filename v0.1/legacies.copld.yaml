@@ -4,7 +4,7 @@ $schema: "https://schemata.opws.org/meta/copld.json#"
 
 # head #
 
-id: "https://schemata.opws.org/draft/v0.1/legacies.json#"
+id: "https://schemata.opws.org/v0.1/legacies.json#"
 version: 0.1.0
 
 definitions:
