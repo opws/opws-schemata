@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-$schema: "https://schemata.opws.org/meta/copld.json#"
+$schema: "https://copld-schema.opws.org/draft-04/schema.json#"
 
 # head #
 
