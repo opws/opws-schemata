@@ -266,6 +266,9 @@ definitions:
       url:
         $ref: "#/definitions/urlish"
 
+      directions:
+        $ref: "#/definitions/desclist"
+
       form.:
 
         account:
@@ -477,6 +480,9 @@ properties:
 
         change.:
 
+          directions:
+            $ref: "#/definitions/desclist"
+
           form.:
 
             challenge:
@@ -622,10 +628,16 @@ properties:
         url:
           $ref: "#/definitions/urlish"
 
+        directions:
+          $ref: "#/definitions/desclist"
+
     change.:
 
       url:
         $ref: "#/definitions/urlish"
+
+      directions:
+        $ref: "#/definitions/desclist"
 
       before.:
 
@@ -668,6 +680,15 @@ properties:
           - unchanged
           - logout
 
+    documentation:
+      type: array
+      minItems: 1
+      items:
+        $ref: "#/definitions/urlish"
+
+    errata:
+      $ref: "#/definitions/desclist"
+
   username.:
 
     value:
@@ -682,6 +703,9 @@ properties:
 
         url:
           $ref: "#/definitions/urlish"
+
+        directions:
+          $ref: "#/definitions/desclist"
 
         form.:
 
@@ -724,6 +748,9 @@ properties:
       url:
         $ref: "#/definitions/urlish"
 
+      directions:
+        $ref: "#/definitions/desclist"
+
       before.:
 
         form.:
@@ -751,6 +778,15 @@ properties:
           password:
             $ref: "#/definitions/formfield"
 
+    documentation:
+      type: array
+      minItems: 1
+      items:
+        $ref: "#/definitions/urlish"
+
+    errata:
+      $ref: "#/definitions/desclist"
+
   legal.:
 
     documents:
@@ -768,10 +804,16 @@ properties:
           url:
             $ref: "#/definitions/urlish"
 
+          directions:
+            $ref: "#/definitions/desclist"
+
   registration.:
 
     url:
       $ref: "#/definitions/urlish"
+
+    directions:
+      $ref: "#/definitions/desclist"
 
     form.:
 
@@ -823,6 +865,9 @@ properties:
     url:
       $ref: "#/definitions/urlish"
 
+    directions:
+      $ref: "#/definitions/desclist"
+
     form.:
 
       account:
@@ -861,12 +906,18 @@ properties:
       url:
         $ref: "#/definitions/urlish"
 
+      directions:
+        $ref: "#/definitions/desclist"
+
   report.:
 
     breach.:
 
       url:
         $ref: "#/definitions/urlish"
+
+      directions:
+        $ref: "#/definitions/desclist"
 
   challenge.:
 

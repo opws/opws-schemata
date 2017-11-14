@@ -9,3 +9,17 @@ An English (or en_US) version of any note should be included along with the targ
 ## Description Lists
 
 In properties that use arrays of description objects, such as `password.value.must`, each item should be *as granular as possible*, so that each statement can be traslated separately, and new statements, or changes to existing statements, can be added or removed independently.
+
+## Places where description lists are used
+
+### "Must" and "Must Not" rules
+
+See [the documentation on rules](rules.md).
+
+### Errata
+
+Errata describes any instances where a site's rules or behavior are inconsistent, either with documented / stated rules, or with other parts of the site.
+
+### Directions
+
+Anything that can have a URL can have a list of directions explaining how to get to that thing after visiting the URL (or, absent a URL, how to approximate the action).
