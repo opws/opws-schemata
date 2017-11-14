@@ -70,14 +70,6 @@ Rules for the format of answers to these challenge questions are documented with
 
 Usually, a user has to agree to all of these to register an account (see the description of `registration.form.terms.agreement` in the [documentation on forms](forms.md)).
 
-## Notes
-
-Notes describing quirks of the site that make it difficult to map to the standard format are present in some profiles as description lists (see [the documentation on description lists](descriptions.md)) on a `notes` property of another object of the profile.
-
-Note that nearly any object may have a "notes" field alongside its other documented fields.
-
-Notes are not currently included as part of the schema, and are specially ignored altogether by [the validator](https://github.com/opws/opws-validate).
-
 ## Deferred account systems
 
 Sites whose primary account system is that of another domain will specify that alternate domain used as the account provider under `use` (for instance, Google services like YouTube use `google.com`).
