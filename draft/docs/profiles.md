@@ -18,6 +18,10 @@ A "username" is defined as any user-controlled string identifier for the account
 
 Rules for the format of usernames are documented with `username.value` and `username.contents`, following the [documentation on rules](rules.md).
 
+Profiles may have a list of URLs for pages documenting the rules around usernames (as `username.documentation`), following the [documentation on URLs](urls.md).
+
+Usernames may have descriptions for errata (as `username.errata`), following the [documentation on descriptions](descriptions.md).
+
 ### Username reminders
 
 Some sites have a facility, separate from requesting a password reset, for requesting a message containing the *username* attached to an email address. These facilities are documented under `username.reminder`.

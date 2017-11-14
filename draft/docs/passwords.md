@@ -113,3 +113,11 @@ Sites where tokens *do not expire* after use, meaning that they can then be *reu
 The URL for chaning the user's password is profiled as `password.change.url`, following the [documentation on URLs](urls.md).
 
 The form for chaning the user's password is profiled as `password.change.form`, following the [documentation on forms](forms.md).
+
+## Password errata
+
+Passwords may have descriptions for errata (as `password.errata`), following the [documentation on descriptions](descriptions.md).
+
+## Password documentation
+
+Profiles may have a list of URLs for pages documenting the rules around passwords (as `password.documentation`), following the [documentation on URLs](urls.md).

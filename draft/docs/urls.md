@@ -19,3 +19,7 @@ For pages that contain several sections, only one of which is pertinent to the l
 ## Variables
 
 When URLs include a variable (such as a username), the URL will be separated by spaces and plusses (for concatenation).
+
+## Directions
+
+Anything with a URL may also have described directions for what to do after visiting that URL (as a `.directions` list as a sibling of `.url`), following the [documentation on descriptions](descriptions.md).
