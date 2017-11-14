@@ -1,0 +1,31 @@
+%YAML 1.2
+---
+$schema: "https://copld-schema.opws.org/draft-06/schema.json#"
+
+# head #
+
+$id: "https://schemata.opws.org/draft/v0.2/legacies.json#"
+version: 0.2.0
+
+definitions:
+
+  domain:
+    type: string
+    pattern: ^(\*\.)*([a-z0-9\-]+\.)+[a-z0-9\-]+$
+
+# body #
+
+type: array
+items:
+  type: object
+  required: [circa]
+  properties:
+
+    circa:
+      type: string
+      format: date
+
+    moved.:
+
+      to:
+        $ref: "#/definitions/domain"

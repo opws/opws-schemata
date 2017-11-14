@@ -1,0 +1,30 @@
+name: Site Name Here # How would you refer to this site in a sentence?
+password:
+  reset:
+    flow:
+      request:
+        form:
+          account:
+            accepts: [email] # Does the reset page accept email address, or username?
+          captcha:
+            type: word # Is there a captcha?
+      response:
+        email:
+          sender: sender@example.com # What address does a reset email come from?
+          body: [username, url] # Does the email contain a URL? A link? User info?
+        expire: 24h # How long until the link expires?
+      change:
+        form:
+          newpassword:
+            characters: hidden # Can you see what you're typing?
+          repeat:
+            newpassword:
+              input: required # Do you have to type the new password twice?
+      submit:
+        destination:
+          page: profile # What kind of page does submitting take you to?
+        sessions:
+          own: login # Is the user auto-logged in, or just directed to do so?
+        expire: now # Can the link be revisited after use?
+reviewed:
+  date: 1970-01-01T00:00:00.000Z # use https://www.isotimestamp.com/

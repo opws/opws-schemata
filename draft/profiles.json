@@ -1,0 +1,1286 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "https://schemata.opws.org/draft/v0.2/profiles.json#",
+  "version": "0.2.0",
+  "definitions": {
+    "charclass": {
+      "type": "string",
+      "enum": [
+        "alpha",
+        "upper",
+        "lower",
+        "digit",
+        "punct",
+        "space",
+        "graph"
+      ]
+    },
+    "variable": {
+      "type": "string",
+      "enum": [
+        "username",
+        "firstname",
+        "lastname"
+      ]
+    },
+    "dictionary": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "theme": {
+          "type": "string",
+          "enum": [
+            "common",
+            "english",
+            "obscene"
+          ]
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "localizations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]+(_[A-Z]+)?$": {
+          "type": "string"
+        }
+      },
+      "minProperties": 1
+    },
+    "desclist": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/localizations"
+      }
+    },
+    "shotclock": {
+      "type": "string",
+      "pattern": "^([0-9]+d|[0-9]+h|[0-9]+m|now|unchanged)$"
+    },
+    "datespan": {
+      "type": "string",
+      "pattern": "^([0-9]+d|forever)$"
+    },
+    "requirement": {
+      "type": "string",
+      "enum": [
+        "required",
+        "optional",
+        "none"
+      ]
+    },
+    "maskedness": {
+      "type": "string",
+      "enum": [
+        "masked",
+        "unmasked",
+        "revealable",
+        "maskable"
+      ]
+    },
+    "formfield": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/requirement"
+        },
+        "masking": {
+          "$ref": "#/definitions/maskedness"
+        }
+      }
+    },
+    "accountfield": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "accepts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "username",
+              "email",
+              "phone",
+              "domain",
+              "accountno",
+              "fullname"
+            ]
+          },
+          "minItems": 2,
+          "uniqueItems": true
+        }
+      }
+    },
+    "fieldvalue": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "length": {
+          "$ref": "#/definitions/length"
+        },
+        "blacklist": {
+          "type": "object",
+          "properties": {
+            "dictionaries": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/dictionary"
+              }
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/variable"
+              }
+            }
+          },
+          "minimumProperties": 1
+        },
+        "must": {
+          "$ref": "#/definitions/desclist"
+        },
+        "mustnot": {
+          "$ref": "#/definitions/desclist"
+        }
+      }
+    },
+    "fieldcontents": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "blacklist": {
+          "type": "object",
+          "properties": {
+            "classes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/charclass"
+              }
+            },
+            "strings": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "dictionaries": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/dictionary"
+              }
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/variable"
+              }
+            }
+          },
+          "minimumProperties": 1
+        },
+        "whitelist": {
+          "type": "object",
+          "properties": {
+            "classes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/charclass"
+              }
+            },
+            "strings": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "minimumProperties": 1
+        },
+        "required": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "minProperties": 1,
+            "properties": {
+              "atleast": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "classes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/definitions/charclass"
+                }
+              },
+              "strings": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "length": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "urlish": {
+      "type": "string",
+      "pattern": "^https?://(([a-z0-9\\-]+|\\*)\\.)+[a-z0-9\\-]+/"
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^(\\*\\.)*([a-z0-9\\-]+\\.)+[a-z0-9\\-]+$"
+    },
+    "accountids": {
+      "type": "string",
+      "enum": [
+        "username",
+        "email",
+        "phone"
+      ]
+    },
+    "formcaptcha": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "recaptcha",
+            "securimage",
+            "funcaptcha",
+            "alphanumeric",
+            "letters",
+            "word",
+            "ascii",
+            "question"
+          ]
+        }
+      }
+    },
+    "resetrequest": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "url": {
+          "$ref": "#/definitions/urlish"
+        },
+        "form": {
+          "type": "object",
+          "properties": {
+            "account": {
+              "$ref": "#/definitions/accountfield"
+            },
+            "username": {
+              "$ref": "#/definitions/formfield"
+            },
+            "email": {
+              "$ref": "#/definitions/formfield"
+            },
+            "repeat": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "$ref": "#/definitions/formfield"
+                }
+              },
+              "minimumProperties": 1
+            },
+            "phone": {
+              "$ref": "#/definitions/formfield"
+            },
+            "domain": {
+              "$ref": "#/definitions/formfield"
+            },
+            "captcha": {
+              "$ref": "#/definitions/formcaptcha"
+            }
+          },
+          "minimumProperties": 1
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "password": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "object",
+          "properties": {
+            "length": {
+              "$ref": "#/definitions/length"
+            },
+            "blacklist": {
+              "type": "object",
+              "properties": {
+                "dictionaries": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/definitions/dictionary"
+                  }
+                },
+                "variables": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/definitions/variable"
+                  }
+                },
+                "previous": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "period": {
+                      "$ref": "#/definitions/datespan"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "must": {
+              "$ref": "#/definitions/desclist"
+            },
+            "mustnot": {
+              "$ref": "#/definitions/desclist"
+            }
+          },
+          "minimumProperties": 1
+        },
+        "contents": {
+          "type": "object",
+          "properties": {
+            "blacklist": {
+              "type": "object",
+              "properties": {
+                "classes": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/definitions/charclass"
+                  }
+                },
+                "strings": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "dictionaries": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/definitions/dictionary"
+                  }
+                },
+                "variables": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/definitions/variable"
+                  }
+                },
+                "previous": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "period": {
+                      "$ref": "#/definitions/datespan"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "whitelist": {
+              "type": "object",
+              "properties": {
+                "classes": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/definitions/charclass"
+                  }
+                },
+                "strings": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "minimumProperties": 1
+            },
+            "required": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "minProperties": 1,
+                "properties": {
+                  "atleast": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "classes": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/definitions/charclass"
+                    }
+                  },
+                  "strings": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "minimumProperties": 1
+        },
+        "reset": {
+          "type": "object",
+          "properties": {
+            "flow": {
+              "type": "object",
+              "properties": {
+                "request": {
+                  "$ref": "#/definitions/resetrequest"
+                },
+                "response": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "object",
+                      "properties": {
+                        "sender": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "username",
+                              "firstname",
+                              "lastname",
+                              "fullname",
+                              "url",
+                              "link",
+                              "code",
+                              "origin",
+                              "password"
+                            ]
+                          },
+                          "uniqueItems": true
+                        }
+                      },
+                      "minimumProperties": 1
+                    },
+                    "expire": {
+                      "$ref": "#/definitions/shotclock"
+                    }
+                  },
+                  "minimumProperties": 1
+                },
+                "open": {
+                  "type": "object",
+                  "properties": {
+                    "expects": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "origin"
+                        ]
+                      },
+                      "uniqueItems": true
+                    },
+                    "sessions": {
+                      "type": "object",
+                      "properties": {
+                        "own": {
+                          "type": "string",
+                          "enum": [
+                            "login",
+                            "unchanged",
+                            "logout"
+                          ]
+                        },
+                        "others": {
+                          "type": "string",
+                          "enum": [
+                            "unchanged",
+                            "logout"
+                          ]
+                        }
+                      },
+                      "minimumProperties": 1
+                    },
+                    "expire": {
+                      "$ref": "#/definitions/shotclock"
+                    }
+                  },
+                  "minimumProperties": 1
+                },
+                "change": {
+                  "type": "object",
+                  "properties": {
+                    "form": {
+                      "type": "object",
+                      "properties": {
+                        "challenge": {
+                          "$ref": "#/definitions/formfield"
+                        },
+                        "newpassword": {
+                          "$ref": "#/definitions/formfield"
+                        },
+                        "repeat": {
+                          "type": "object",
+                          "properties": {
+                            "newpassword": {
+                              "$ref": "#/definitions/formfield"
+                            }
+                          },
+                          "minimumProperties": 1
+                        },
+                        "email": {
+                          "$ref": "#/definitions/formfield"
+                        },
+                        "account": {
+                          "$ref": "#/definitions/accountfield"
+                        }
+                      },
+                      "minimumProperties": 1
+                    }
+                  },
+                  "minimumProperties": 1
+                },
+                "submit": {
+                  "type": "object",
+                  "properties": {
+                    "destination": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "string",
+                          "enum": [
+                            "stub",
+                            "login",
+                            "settings",
+                            "profile",
+                            "home"
+                          ]
+                        }
+                      },
+                      "minimumProperties": 1
+                    },
+                    "sessions": {
+                      "type": "object",
+                      "properties": {
+                        "own": {
+                          "type": "string",
+                          "enum": [
+                            "login",
+                            "unchanged",
+                            "logout"
+                          ]
+                        },
+                        "others": {
+                          "type": "string",
+                          "enum": [
+                            "unchanged",
+                            "logout"
+                          ]
+                        }
+                      },
+                      "minimumProperties": 1
+                    },
+                    "expire": {
+                      "$ref": "#/definitions/shotclock"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "randomize": {
+              "type": "object",
+              "properties": {
+                "request": {
+                  "$ref": "#/definitions/resetrequest"
+                },
+                "response": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "object",
+                      "properties": {
+                        "sender": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "username",
+                              "firstname",
+                              "lastname",
+                              "fullname",
+                              "url",
+                              "link",
+                              "code",
+                              "origin",
+                              "password"
+                            ]
+                          },
+                          "uniqueItems": true
+                        }
+                      },
+                      "minimumProperties": 1
+                    },
+                    "expire": {
+                      "$ref": "#/definitions/shotclock"
+                    }
+                  },
+                  "minimumProperties": 1
+                },
+                "open": {
+                  "type": "object",
+                  "properties": {
+                    "expire": {
+                      "$ref": "#/definitions/shotclock"
+                    },
+                    "result": {
+                      "type": "string",
+                      "enum": [
+                        "send",
+                        "change"
+                      ]
+                    },
+                    "sessions": {
+                      "type": "object",
+                      "properties": {
+                        "own": {
+                          "type": "string",
+                          "enum": [
+                            "login",
+                            "unchanged",
+                            "logout"
+                          ]
+                        },
+                        "others": {
+                          "type": "string",
+                          "enum": [
+                            "unchanged",
+                            "logout"
+                          ]
+                        }
+                      },
+                      "minimumProperties": 1
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "onetime": {
+              "type": "object",
+              "properties": {
+                "request": {
+                  "$ref": "#/definitions/resetrequest"
+                },
+                "response": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "object",
+                      "properties": {
+                        "sender": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "username",
+                              "firstname",
+                              "lastname",
+                              "fullname",
+                              "url",
+                              "link",
+                              "code",
+                              "origin",
+                              "password"
+                            ]
+                          },
+                          "uniqueItems": true
+                        }
+                      },
+                      "minimumProperties": 1
+                    },
+                    "expire": {
+                      "$ref": "#/definitions/shotclock"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "replacement": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "$ref": "#/definitions/urlish"
+                }
+              },
+              "minimumProperties": 1
+            }
+          },
+          "minimumProperties": 1
+        },
+        "change": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "$ref": "#/definitions/urlish"
+            },
+            "before": {
+              "type": "object",
+              "properties": {
+                "form": {
+                  "type": "object",
+                  "properties": {
+                    "oldpassword": {
+                      "$ref": "#/definitions/formfield"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "form": {
+              "type": "object",
+              "properties": {
+                "oldpassword": {
+                  "$ref": "#/definitions/formfield"
+                },
+                "newpassword": {
+                  "$ref": "#/definitions/formfield"
+                },
+                "repeat": {
+                  "type": "object",
+                  "properties": {
+                    "newpassword": {
+                      "$ref": "#/definitions/formfield"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "after": {
+              "type": "object",
+              "properties": {
+                "form": {
+                  "type": "object",
+                  "properties": {
+                    "oldpassword": {
+                      "$ref": "#/definitions/formfield"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "sessions": {
+              "type": "object",
+              "properties": {
+                "own": {
+                  "type": "string",
+                  "enum": [
+                    "unchanged",
+                    "logout"
+                  ]
+                },
+                "others": {
+                  "type": "string",
+                  "enum": [
+                    "unchanged",
+                    "logout"
+                  ]
+                }
+              },
+              "minimumProperties": 1
+            }
+          },
+          "minimumProperties": 1
+        }
+      },
+      "minimumProperties": 1
+    },
+    "username": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/fieldvalue"
+        },
+        "contents": {
+          "$ref": "#/definitions/fieldcontents"
+        },
+        "reminder": {
+          "type": "object",
+          "properties": {
+            "request": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "$ref": "#/definitions/urlish"
+                },
+                "form": {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "$ref": "#/definitions/accountfield"
+                    },
+                    "email": {
+                      "$ref": "#/definitions/formfield"
+                    },
+                    "domain": {
+                      "$ref": "#/definitions/formfield"
+                    },
+                    "phone": {
+                      "$ref": "#/definitions/formfield"
+                    },
+                    "captcha": {
+                      "$ref": "#/definitions/formcaptcha"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "response": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "object",
+                  "properties": {
+                    "sender": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "body": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "username",
+                          "firstname",
+                          "lastname",
+                          "origin"
+                        ]
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            }
+          },
+          "minimumProperties": 1
+        },
+        "change": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "$ref": "#/definitions/urlish"
+            },
+            "before": {
+              "type": "object",
+              "properties": {
+                "form": {
+                  "type": "object",
+                  "properties": {
+                    "password": {
+                      "$ref": "#/definitions/formfield"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "form": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "$ref": "#/definitions/formfield"
+                },
+                "newusername": {
+                  "$ref": "#/definitions/formfield"
+                },
+                "repeat": {
+                  "type": "object",
+                  "properties": {
+                    "newusername": {
+                      "$ref": "#/definitions/formfield"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            },
+            "after": {
+              "type": "object",
+              "properties": {
+                "form": {
+                  "type": "object",
+                  "properties": {
+                    "password": {
+                      "$ref": "#/definitions/formfield"
+                    }
+                  },
+                  "minimumProperties": 1
+                }
+              },
+              "minimumProperties": 1
+            }
+          },
+          "minimumProperties": 1
+        }
+      },
+      "minimumProperties": 1
+    },
+    "legal": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "url"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "$ref": "#/definitions/urlish"
+              }
+            }
+          }
+        }
+      },
+      "minimumProperties": 1
+    },
+    "registration": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "$ref": "#/definitions/urlish"
+        },
+        "form": {
+          "type": "object",
+          "properties": {
+            "firstname": {
+              "$ref": "#/definitions/formfield"
+            },
+            "lastname": {
+              "$ref": "#/definitions/formfield"
+            },
+            "fullname": {
+              "$ref": "#/definitions/formfield"
+            },
+            "birthdate": {
+              "$ref": "#/definitions/formfield"
+            },
+            "username": {
+              "$ref": "#/definitions/formfield"
+            },
+            "password": {
+              "$ref": "#/definitions/formfield"
+            },
+            "email": {
+              "$ref": "#/definitions/formfield"
+            },
+            "phone": {
+              "$ref": "#/definitions/formfield"
+            },
+            "repeat": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "$ref": "#/definitions/formfield"
+                },
+                "email": {
+                  "$ref": "#/definitions/formfield"
+                }
+              },
+              "minimumProperties": 1
+            },
+            "captcha": {
+              "$ref": "#/definitions/formcaptcha"
+            },
+            "terms": {
+              "type": "object",
+              "properties": {
+                "agreement": {
+                  "type": "string",
+                  "enum": [
+                    "implicit",
+                    "checkbox"
+                  ]
+                }
+              },
+              "minimumProperties": 1
+            }
+          },
+          "minimumProperties": 1
+        }
+      },
+      "minimumProperties": 1
+    },
+    "login": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "$ref": "#/definitions/urlish"
+        },
+        "form": {
+          "type": "object",
+          "properties": {
+            "account": {
+              "$ref": "#/definitions/accountfield"
+            },
+            "email": {
+              "$ref": "#/definitions/formfield"
+            },
+            "username": {
+              "$ref": "#/definitions/formfield"
+            },
+            "password": {
+              "$ref": "#/definitions/formfield"
+            },
+            "persist": {
+              "type": "object",
+              "properties": {
+                "checkbox": {
+                  "type": "string",
+                  "enum": [
+                    "checked",
+                    "unchecked"
+                  ]
+                }
+              },
+              "minimumProperties": 1
+            }
+          },
+          "minimumProperties": 1
+        }
+      },
+      "minimumProperties": 1
+    },
+    "thirdparty": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "object",
+          "properties": {
+            "providers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/domain"
+              }
+            }
+          },
+          "minimumProperties": 1
+        }
+      },
+      "minimumProperties": 1
+    },
+    "sessions": {
+      "type": "object",
+      "properties": {
+        "management": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "$ref": "#/definitions/urlish"
+            }
+          },
+          "minimumProperties": 1
+        }
+      },
+      "minimumProperties": 1
+    },
+    "report": {
+      "type": "object",
+      "properties": {
+        "breach": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "$ref": "#/definitions/urlish"
+            }
+          },
+          "minimumProperties": 1
+        }
+      },
+      "minimumProperties": 1
+    },
+    "challenge": {
+      "type": "object",
+      "properties": {
+        "answers": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "$ref": "#/definitions/fieldvalue"
+            },
+            "contents": {
+              "$ref": "#/definitions/fieldcontents"
+            }
+          },
+          "minimumProperties": 1
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "required": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "optional": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "minimumProperties": 1
+    },
+    "distinguish": {
+      "type": "object",
+      "properties": {
+        "subdomains": {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "integer",
+              "minimum": 2
+            }
+          },
+          "minimumProperties": 1
+        }
+      },
+      "minimumProperties": 1
+    },
+    "use": {
+      "$ref": "#/definitions/domain"
+    },
+    "reviewed": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "date"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "reviewed"
+  ]
+}

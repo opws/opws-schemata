@@ -1,0 +1,921 @@
+%YAML 1.2
+---
+$schema: "https://copld-schema.opws.org/draft-06/schema.json#"
+
+# head #
+
+$id: "https://schemata.opws.org/draft/v0.2/profiles.json#"
+version: 0.2.0
+
+definitions:
+
+  charclass:
+    type: string
+    enum:
+    - alpha
+    - upper
+    - lower
+    - digit
+    - punct
+    - space
+    - graph
+
+  variable:
+    type: string
+    enum:
+    - username
+    - firstname
+    - lastname
+
+  dictionary:
+    type: object
+    minProperties: 1
+    properties:
+
+      theme:
+        type: string
+        enum:
+        - common
+        - english
+        - obscene
+
+      entries:
+        type: array
+        minItems: 1
+        items:
+          type: string
+
+  localizations:
+    type: object
+    patternProperties:
+      ^[a-z]+(_[A-Z]+)?$:
+        type: string
+    minProperties: 1
+
+  desclist:
+    type: array
+    minItems: 1
+    items:
+      $ref: "#/definitions/localizations"
+
+  shotclock:
+    type: string
+    pattern: ^([0-9]+d|[0-9]+h|[0-9]+m|now|unchanged)$
+
+  datespan:
+    type: string
+    pattern: ^([0-9]+d|forever)$
+
+  requirement:
+    type: string
+    enum:
+    - required
+    - optional
+    - none
+
+  maskedness:
+    type: string
+    enum:
+    - masked
+    - unmasked
+    - revealable
+    - maskable
+
+  formfield:
+    type: object
+    minProperties: 1
+    properties:
+
+      input:
+        $ref: "#/definitions/requirement"
+
+      masking:
+        $ref: "#/definitions/maskedness"
+
+  accountfield:
+    type: object
+    minProperties: 1
+    properties:
+
+      accepts:
+        type: array
+        items:
+          type: string
+          enum:
+          - username
+          - email
+          - phone
+          - domain
+          - accountno
+          - fullname
+        minItems: 2
+        uniqueItems: true
+
+  fieldvalue:
+    type: object
+    minProperties: 1
+    properties:
+
+      length:
+        $ref: "#/definitions/length"
+
+      blacklist.:
+
+        dictionaries:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/dictionary"
+
+        variables:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/variable"
+
+      must:
+        $ref: "#/definitions/desclist"
+
+      mustnot:
+        $ref: "#/definitions/desclist"
+
+  fieldcontents:
+    type: object
+    minProperties: 1
+    properties:
+
+      blacklist.:
+
+        classes:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/charclass"
+
+        strings:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+
+        dictionaries:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/dictionary"
+
+        variables:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/variable"
+
+      whitelist.:
+
+        classes:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/charclass"
+
+        strings:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+
+      required:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          minProperties: 1
+          properties:
+
+            atleast:
+              type: integer
+              minimum: 1
+
+            classes:
+              type: array
+              minItems: 1
+              items:
+                $ref: "#/definitions/charclass"
+
+            strings:
+              type: array
+              minItems: 1
+              items:
+                type: string
+                minLength: 1
+
+  length:
+    type: object
+    minProperties: 1
+    properties:
+
+      min:
+        type: integer
+        minimum: 1
+
+      max:
+        type: integer
+        minimum: 1
+
+  urlish:
+    type: string
+    # right now, after the host and path, anything goes
+    # this will probably get more formal in the future
+    pattern: ^https?://(([a-z0-9\-]+|\*)\.)+[a-z0-9\-]+/
+
+  domain:
+    type: string
+    pattern: ^(\*\.)*([a-z0-9\-]+\.)+[a-z0-9\-]+$
+
+  accountids:
+    type: string
+    enum:
+    - username
+    - email
+    - phone
+
+  formcaptcha:
+    type: object
+    minProperties: 1
+    properties:
+
+      type:
+        type: string
+        enum:
+        - recaptcha
+        - securimage
+        - funcaptcha
+        - alphanumeric
+        - letters
+        - word
+        - ascii
+        - question
+
+  resetrequest:
+    type: object
+    minProperties: 1
+    properties:
+
+      url:
+        $ref: "#/definitions/urlish"
+
+      form.:
+
+        account:
+          $ref: "#/definitions/accountfield"
+
+        username:
+          $ref: "#/definitions/formfield"
+
+        email:
+          $ref: "#/definitions/formfield"
+
+        repeat.:
+
+          email:
+            $ref: "#/definitions/formfield"
+
+        phone:
+          $ref: "#/definitions/formfield"
+
+        domain:
+          $ref: "#/definitions/formfield"
+
+        captcha:
+          $ref: "#/definitions/formcaptcha"
+
+# body #
+
+type: object
+properties:
+
+  name:
+    type: string
+
+  password.:
+
+    value.:
+
+      length:
+        $ref: "#/definitions/length"
+
+      blacklist.:
+
+        dictionaries:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/dictionary"
+
+        variables:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/variable"
+
+        previous.:
+
+          count:
+            type: integer
+            minimum: 1
+
+          period:
+            $ref: "#/definitions/datespan"
+
+      must:
+        $ref: "#/definitions/desclist"
+
+      mustnot:
+        $ref: "#/definitions/desclist"
+
+    contents.:
+
+      blacklist.:
+
+        classes:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/charclass"
+
+        strings:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+
+        dictionaries:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/dictionary"
+
+        variables:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/variable"
+
+        previous.:
+
+          count:
+            type: integer
+            minimum: 1
+
+          period:
+            $ref: "#/definitions/datespan"
+
+      whitelist.:
+
+        classes:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/definitions/charclass"
+
+        strings:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+
+      required:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          minProperties: 1
+          properties:
+
+            atleast:
+              type: integer
+              minimum: 1
+
+            classes:
+              type: array
+              minItems: 1
+              items:
+                $ref: "#/definitions/charclass"
+
+            strings:
+              type: array
+              minItems: 1
+              items:
+                type: string
+                minLength: 1
+
+    reset.:
+
+      flow.:
+
+        request:
+          $ref: "#/definitions/resetrequest"
+
+        response.:
+
+          email.:
+
+            sender:
+              type: string
+              format: email
+
+            body:
+              type: array
+              items:
+                type: string
+                enum:
+                - username
+                - firstname
+                - lastname
+                - fullname
+                - url
+                - link
+                - code
+                - origin
+                - password
+              uniqueItems: true
+
+          expire:
+            $ref: "#/definitions/shotclock"
+
+        open.:
+
+          expects:
+            type: array
+            items:
+              type: string
+              enum:
+              - origin
+            uniqueItems: true
+
+          sessions.:
+
+            own:
+              type: string
+              enum:
+              - login
+              - unchanged
+              - logout
+
+            others:
+              type: string
+              enum:
+              - unchanged
+              - logout
+
+          expire:
+            $ref: "#/definitions/shotclock"
+
+        change.:
+
+          form.:
+
+            challenge:
+              $ref: "#/definitions/formfield"
+
+            newpassword:
+              $ref: "#/definitions/formfield"
+
+            repeat.:
+
+              newpassword:
+                $ref: "#/definitions/formfield"
+
+            email:
+              $ref: "#/definitions/formfield"
+
+            account:
+              $ref: "#/definitions/accountfield"
+
+        submit.:
+
+          destination.:
+
+            page:
+              type: string
+              enum:
+              - stub
+              - login
+              - settings
+              - profile
+              - home
+
+          sessions.:
+
+            own:
+              type: string
+              enum:
+              - login
+              - unchanged
+              - logout
+
+            others:
+              type: string
+              enum:
+              - unchanged
+              - logout
+
+          expire:
+            $ref: "#/definitions/shotclock"
+
+      randomize.:
+
+        request:
+          $ref: "#/definitions/resetrequest"
+
+        response.:
+
+          email.:
+
+            sender:
+              type: string
+              format: email
+
+            body:
+              type: array
+              items:
+                type: string
+                enum:
+                - username
+                - firstname
+                - lastname
+                - fullname
+                - url
+                - link
+                - code
+                - origin
+                - password
+              uniqueItems: true
+
+          expire:
+            $ref: "#/definitions/shotclock"
+
+        open.:
+
+          expire:
+            $ref: "#/definitions/shotclock"
+
+          result:
+            type: string
+            enum:
+            - send
+            - change
+
+          sessions.:
+
+            own:
+              type: string
+              enum:
+              - login
+              - unchanged
+              - logout
+
+            others:
+              type: string
+              enum:
+              - unchanged
+              - logout
+
+      onetime.:
+
+        request:
+          $ref: "#/definitions/resetrequest"
+
+        response.:
+
+          email.:
+
+            sender:
+              type: string
+              format: email
+
+            body:
+              type: array
+              items:
+                type: string
+                enum:
+                - username
+                - firstname
+                - lastname
+                - fullname
+                - url
+                - link
+                - code
+                - origin
+                - password
+              uniqueItems: true
+
+          expire:
+            $ref: "#/definitions/shotclock"
+
+      replacement.:
+
+        url:
+          $ref: "#/definitions/urlish"
+
+    change.:
+
+      url:
+        $ref: "#/definitions/urlish"
+
+      before.:
+
+        form.:
+
+          oldpassword:
+            $ref: "#/definitions/formfield"
+
+      form.:
+
+        oldpassword:
+          $ref: "#/definitions/formfield"
+
+        newpassword:
+          $ref: "#/definitions/formfield"
+
+        repeat.:
+
+          newpassword:
+            $ref: "#/definitions/formfield"
+
+      after.:
+
+        form.:
+
+          oldpassword:
+            $ref: "#/definitions/formfield"
+
+      sessions.:
+
+        own:
+          type: string
+          enum:
+          - unchanged
+          - logout
+
+        others:
+          type: string
+          enum:
+          - unchanged
+          - logout
+
+  username.:
+
+    value:
+      $ref: "#/definitions/fieldvalue"
+
+    contents:
+      $ref: "#/definitions/fieldcontents"
+
+    reminder.:
+
+      request.:
+
+        url:
+          $ref: "#/definitions/urlish"
+
+        form.:
+
+          account:
+            $ref: "#/definitions/accountfield"
+
+          email:
+            $ref: "#/definitions/formfield"
+
+          domain:
+            $ref: "#/definitions/formfield"
+
+          phone:
+            $ref: "#/definitions/formfield"
+
+          captcha:
+            $ref: "#/definitions/formcaptcha"
+
+      response.:
+
+        email.:
+
+          sender:
+            type: string
+            format: email
+
+          body:
+            type: array
+            items:
+              type: string
+              enum:
+              - username
+              - firstname
+              - lastname
+              - origin
+            uniqueItems: true
+
+    change.:
+
+      url:
+        $ref: "#/definitions/urlish"
+
+      before.:
+
+        form.:
+
+          password:
+            $ref: "#/definitions/formfield"
+
+      form.:
+
+        password:
+          $ref: "#/definitions/formfield"
+
+        newusername:
+          $ref: "#/definitions/formfield"
+
+        repeat.:
+
+          newusername:
+            $ref: "#/definitions/formfield"
+
+      after.:
+
+        form.:
+
+          password:
+            $ref: "#/definitions/formfield"
+
+  legal.:
+
+    documents:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        required: [name, url]
+        properties:
+
+          name:
+            type: string
+            minLength: 1
+
+          url:
+            $ref: "#/definitions/urlish"
+
+  registration.:
+
+    url:
+      $ref: "#/definitions/urlish"
+
+    form.:
+
+      firstname:
+        $ref: "#/definitions/formfield"
+
+      lastname:
+        $ref: "#/definitions/formfield"
+
+      fullname:
+        $ref: "#/definitions/formfield"
+
+      birthdate:
+        $ref: "#/definitions/formfield"
+
+      username:
+        $ref: "#/definitions/formfield"
+
+      password:
+        $ref: "#/definitions/formfield"
+
+      email:
+        $ref: "#/definitions/formfield"
+
+      phone:
+        $ref: "#/definitions/formfield"
+
+      repeat.:
+
+        password:
+          $ref: "#/definitions/formfield"
+
+        email:
+          $ref: "#/definitions/formfield"
+
+      captcha:
+        $ref: "#/definitions/formcaptcha"
+
+      terms.:
+
+        agreement:
+          type: string
+          enum:
+          - implicit
+          - checkbox
+
+  login.:
+
+    url:
+      $ref: "#/definitions/urlish"
+
+    form.:
+
+      account:
+        $ref: "#/definitions/accountfield"
+
+      email:
+        $ref: "#/definitions/formfield"
+
+      username:
+        $ref: "#/definitions/formfield"
+
+      password:
+        $ref: "#/definitions/formfield"
+
+      persist.:
+
+        checkbox:
+          type: string
+          enum:
+          - checked
+          - unchecked
+
+  thirdparty.:
+
+    auth.:
+
+      providers:
+        type: array
+        items:
+          $ref: "#/definitions/domain"
+
+  sessions.:
+
+    management.:
+
+      url:
+        $ref: "#/definitions/urlish"
+
+  report.:
+
+    breach.:
+
+      url:
+        $ref: "#/definitions/urlish"
+
+  challenge.:
+
+    answers.:
+
+      value:
+        $ref: "#/definitions/fieldvalue"
+
+      contents:
+        $ref: "#/definitions/fieldcontents"
+
+    questions:
+      type: array
+      items:
+        type: object
+        properties:
+
+          required:
+            type: integer
+            minimum: 1
+
+          optional:
+            type: integer
+            minimum: 1
+
+          options:
+            type: array
+            items:
+              type: string
+
+  distinguish.:
+
+    subdomains.:
+
+      level:
+        type: integer
+        minimum: 2
+
+  use:
+    $ref: "#/definitions/domain"
+
+  reviewed:
+    type: object
+    properties:
+
+      date:
+        type: string
+        format: date-time
+
+    required: [date]
+
+required: [name, reviewed]
