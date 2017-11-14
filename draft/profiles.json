@@ -342,6 +342,15 @@
             },
             "captcha": {
               "$ref": "#/definitions/formcaptcha"
+            },
+            "further": {
+              "type": "object",
+              "properties": {
+                "requirements": {
+                  "$ref": "#/definitions/desclist"
+                }
+              },
+              "minimumProperties": 1
             }
           },
           "minimumProperties": 1
@@ -624,6 +633,15 @@
                         },
                         "account": {
                           "$ref": "#/definitions/accountfield"
+                        },
+                        "further": {
+                          "type": "object",
+                          "properties": {
+                            "requirements": {
+                              "$ref": "#/definitions/desclist"
+                            }
+                          },
+                          "minimumProperties": 1
                         }
                       },
                       "minimumProperties": 1
@@ -841,6 +859,15 @@
                   "properties": {
                     "oldpassword": {
                       "$ref": "#/definitions/formfield"
+                    },
+                    "further": {
+                      "type": "object",
+                      "properties": {
+                        "requirements": {
+                          "$ref": "#/definitions/desclist"
+                        }
+                      },
+                      "minimumProperties": 1
                     }
                   },
                   "minimumProperties": 1
@@ -865,6 +892,15 @@
                     }
                   },
                   "minimumProperties": 1
+                },
+                "further": {
+                  "type": "object",
+                  "properties": {
+                    "requirements": {
+                      "$ref": "#/definitions/desclist"
+                    }
+                  },
+                  "minimumProperties": 1
                 }
               },
               "minimumProperties": 1
@@ -877,6 +913,15 @@
                   "properties": {
                     "oldpassword": {
                       "$ref": "#/definitions/formfield"
+                    },
+                    "further": {
+                      "type": "object",
+                      "properties": {
+                        "requirements": {
+                          "$ref": "#/definitions/desclist"
+                        }
+                      },
+                      "minimumProperties": 1
                     }
                   },
                   "minimumProperties": 1
@@ -958,6 +1003,15 @@
                     },
                     "captcha": {
                       "$ref": "#/definitions/formcaptcha"
+                    },
+                    "further": {
+                      "type": "object",
+                      "properties": {
+                        "requirements": {
+                          "$ref": "#/definitions/desclist"
+                        }
+                      },
+                      "minimumProperties": 1
                     }
                   },
                   "minimumProperties": 1
@@ -1014,6 +1068,15 @@
                   "properties": {
                     "password": {
                       "$ref": "#/definitions/formfield"
+                    },
+                    "further": {
+                      "type": "object",
+                      "properties": {
+                        "requirements": {
+                          "$ref": "#/definitions/desclist"
+                        }
+                      },
+                      "minimumProperties": 1
                     }
                   },
                   "minimumProperties": 1
@@ -1038,6 +1101,15 @@
                     }
                   },
                   "minimumProperties": 1
+                },
+                "further": {
+                  "type": "object",
+                  "properties": {
+                    "requirements": {
+                      "$ref": "#/definitions/desclist"
+                    }
+                  },
+                  "minimumProperties": 1
                 }
               },
               "minimumProperties": 1
@@ -1050,6 +1122,15 @@
                   "properties": {
                     "password": {
                       "$ref": "#/definitions/formfield"
+                    },
+                    "further": {
+                      "type": "object",
+                      "properties": {
+                        "requirements": {
+                          "$ref": "#/definitions/desclist"
+                        }
+                      },
+                      "minimumProperties": 1
                     }
                   },
                   "minimumProperties": 1
@@ -1168,6 +1249,15 @@
                 }
               },
               "minimumProperties": 1
+            },
+            "further": {
+              "type": "object",
+              "properties": {
+                "requirements": {
+                  "$ref": "#/definitions/desclist"
+                }
+              },
+              "minimumProperties": 1
             }
           },
           "minimumProperties": 1
@@ -1198,6 +1288,15 @@
             },
             "password": {
               "$ref": "#/definitions/formfield"
+            },
+            "further": {
+              "type": "object",
+              "properties": {
+                "requirements": {
+                  "$ref": "#/definitions/desclist"
+                }
+              },
+              "minimumProperties": 1
             },
             "persist": {
               "type": "object",

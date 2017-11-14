@@ -122,3 +122,7 @@ If a checkbox for this is present, it will be described as the `login.form.persi
 ## Terms agreement
 
 The `registration.form.terms.agreement` property describes whether registration features a `checkbox` to denote that you agree to the site's legal terms, or if the agreement to terms is spelled out as `implicit` (ie. "By clicking the Submit button, you agree to...").
+
+## Further requirements
+
+Required information or steps not described by other properties under `form` may have a `further.requirements` list describing these requirements, following the [documentation on descriptions](descriptions.md).
