@@ -12,6 +12,8 @@ Properties of forms that describe input fields consist of objects with an `input
 
 Most inputs are assumed to be clear-text, but password inputs are assumed to be masked. In situations where this is not the case, a `characters` property will also be on the input, stating that an input is `masked` or `shown`, or, if the input allows the mask state to be toggled, `showable` or `maskable` (based on the respective initial states).
 
+Inputs that appear separately from the rest of the form, or only appear under certain circumstances, may have a `circumstances` list describing these circumstances, following the [documentation on descriptions](descriptions.md).
+
 ### Username
 
 The `username` property object of forms describes inputs for a username attached to the account, following the definition of "username" from [the main documentation on profiles](profiles.md).
