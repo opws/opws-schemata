@@ -303,6 +303,11 @@ definitions:
         captcha:
           $ref: "#/definitions/formcaptcha"
 
+        further.:
+
+          requirements:
+            $ref: "#/definitions/desclist"
+
 # body #
 
 type: object
@@ -511,6 +516,11 @@ properties:
             account:
               $ref: "#/definitions/accountfield"
 
+            further.:
+
+              requirements:
+                $ref: "#/definitions/desclist"
+
         submit.:
 
           destination.:
@@ -655,6 +665,11 @@ properties:
           oldpassword:
             $ref: "#/definitions/formfield"
 
+          further.:
+
+            requirements:
+              $ref: "#/definitions/desclist"
+
       form.:
 
         oldpassword:
@@ -668,12 +683,22 @@ properties:
           newpassword:
             $ref: "#/definitions/formfield"
 
+        further.:
+
+          requirements:
+            $ref: "#/definitions/desclist"
+
       after.:
 
         form.:
 
           oldpassword:
             $ref: "#/definitions/formfield"
+
+          further.:
+
+            requirements:
+              $ref: "#/definitions/desclist"
 
       sessions.:
 
@@ -733,6 +758,11 @@ properties:
           captcha:
             $ref: "#/definitions/formcaptcha"
 
+          further.:
+
+            requirements:
+              $ref: "#/definitions/desclist"
+
       response.:
 
         email.:
@@ -767,6 +797,11 @@ properties:
           password:
             $ref: "#/definitions/formfield"
 
+          further.:
+
+            requirements:
+              $ref: "#/definitions/desclist"
+
       form.:
 
         password:
@@ -780,12 +815,22 @@ properties:
           newusername:
             $ref: "#/definitions/formfield"
 
+        further.:
+
+          requirements:
+            $ref: "#/definitions/desclist"
+
       after.:
 
         form.:
 
           password:
             $ref: "#/definitions/formfield"
+
+          further.:
+
+            requirements:
+              $ref: "#/definitions/desclist"
 
     documentation:
       type: array
@@ -872,6 +917,11 @@ properties:
         circumstances:
           $ref: "#/definitions/desclist"
 
+      further.:
+
+        requirements:
+          $ref: "#/definitions/desclist"
+
   login.:
 
     url:
@@ -893,6 +943,11 @@ properties:
 
       password:
         $ref: "#/definitions/formfield"
+
+      further.:
+
+        requirements:
+          $ref: "#/definitions/desclist"
 
       persist.:
 
