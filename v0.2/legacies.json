@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "https://schemata.opws.org/v0.2/legacies.json#",
+  "version": "0.2.0",
+  "definitions": {
+    "domain": {
+      "type": "string",
+      "pattern": "^(\\*\\.)*([a-z0-9\\-]+\\.)+[a-z0-9\\-]+$"
+    },
+    "urlish": {
+      "type": "string",
+      "pattern": "^https?://(([a-z0-9\\-]+|\\*)\\.)+[a-z0-9\\-]+/"
+    }
+  },
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "circa"
+    ],
+    "properties": {
+      "circa": {
+        "type": "string",
+        "format": "date"
+      },
+      "moved": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "$ref": "#/definitions/domain"
+          }
+        },
+        "minimumProperties": 1
+      },
+      "announcement": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "$ref": "#/definitions/urlish"
+          }
+        },
+        "minimumProperties": 1
+      }
+    }
+  }
+}
