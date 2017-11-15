@@ -92,6 +92,9 @@ definitions:
       masking:
         $ref: "#/definitions/maskedness"
 
+      circumstances:
+        $ref: "#/definitions/desclist"
+
   accountfield:
     type: object
     minProperties: 1
@@ -110,6 +113,9 @@ definitions:
           - fullname
         minItems: 2
         uniqueItems: true
+
+      circumstances:
+        $ref: "#/definitions/desclist"
 
   fieldvalue:
     type: object
@@ -257,6 +263,9 @@ definitions:
         - word
         - ascii
         - question
+
+      circumstances:
+        $ref: "#/definitions/desclist"
 
   resetrequest:
     type: object
@@ -860,6 +869,9 @@ properties:
           - implicit
           - checkbox
 
+        circumstances:
+          $ref: "#/definitions/desclist"
+
   login.:
 
     url:
@@ -889,6 +901,9 @@ properties:
           enum:
           - checked
           - unchecked
+
+        circumstances:
+          $ref: "#/definitions/desclist"
 
   thirdparty.:
 

@@ -94,6 +94,9 @@
         },
         "masking": {
           "$ref": "#/definitions/maskedness"
+        },
+        "circumstances": {
+          "$ref": "#/definitions/desclist"
         }
       }
     },
@@ -116,6 +119,9 @@
           },
           "minItems": 2,
           "uniqueItems": true
+        },
+        "circumstances": {
+          "$ref": "#/definitions/desclist"
         }
       }
     },
@@ -291,6 +297,9 @@
             "ascii",
             "question"
           ]
+        },
+        "circumstances": {
+          "$ref": "#/definitions/desclist"
         }
       }
     },
@@ -1153,6 +1162,9 @@
                     "implicit",
                     "checkbox"
                   ]
+                },
+                "circumstances": {
+                  "$ref": "#/definitions/desclist"
                 }
               },
               "minimumProperties": 1
@@ -1196,6 +1208,9 @@
                     "checked",
                     "unchecked"
                   ]
+                },
+                "circumstances": {
+                  "$ref": "#/definitions/desclist"
                 }
               },
               "minimumProperties": 1
