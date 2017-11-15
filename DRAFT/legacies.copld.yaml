@@ -1,0 +1,42 @@
+%YAML 1.2
+---
+$schema: "https://copld-schema.opws.org/draft-06/schema.json#"
+
+# head #
+
+$id: "https://schemata.opws.org/DRAFT/legacies.json#"
+version: 0.3.0
+
+definitions:
+
+  domain:
+    type: string
+    pattern: ^(\*\.)*([a-z0-9\-]+\.)+[a-z0-9\-]+$
+
+  urlish:
+    type: string
+    # right now, after the host and path, anything goes
+    # this will probably get more formal in the future
+    pattern: ^https?://(([a-z0-9\-]+|\*)\.)+[a-z0-9\-]+/
+
+# body #
+
+type: array
+items:
+  type: object
+  required: [circa]
+  properties:
+
+    circa:
+      type: string
+      format: date
+
+    moved.:
+
+      to:
+        $ref: "#/definitions/domain"
+
+    announcement.:
+
+      url:
+        $ref: "#/definitions/urlish"
