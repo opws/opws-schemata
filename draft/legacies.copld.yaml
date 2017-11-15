@@ -13,6 +13,12 @@ definitions:
     type: string
     pattern: ^(\*\.)*([a-z0-9\-]+\.)+[a-z0-9\-]+$
 
+  urlish:
+    type: string
+    # right now, after the host and path, anything goes
+    # this will probably get more formal in the future
+    pattern: ^https?://(([a-z0-9\-]+|\*)\.)+[a-z0-9\-]+/
+
 # body #
 
 type: array
@@ -29,3 +35,8 @@ items:
 
       to:
         $ref: "#/definitions/domain"
+
+    announcement.:
+
+      url:
+        $ref: "#/definitions/urlish"
